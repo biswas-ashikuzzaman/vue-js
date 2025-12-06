@@ -1,48 +1,31 @@
-<!-- Sidebar.vue -->
 <template>
-  <div :class="['sidebar', { collapsed: collapsed }]">
-    <!-- Logo -->
-    <div class="top">
-      <i class="las la-chart-pie icon"></i>
-      <span v-if="!collapsed">ADMIN PANEL</span>
+  <div :class="['sidebar', { collapsed: isCollapsed }]">
+
+    <!-- Toggle Button -->
+    <div class="toggle-btn" @click="toggleSidebar">
+      <span v-if="isCollapsed">➤</span>
+      <span v-else>❮</span>
     </div>
 
     <!-- Menu -->
     <ul class="menu">
-      <li>
-        <i class="las la-home"></i>
-        <span v-if="!collapsed">Dashboard</span>
+      <li @click="toggleMenu('dashboard')" class="item">
+        <span v-if="!isCollapsed">Dashboard</span>
       </li>
 
-      <li>
-        <i class="las la-tasks"></i>
-        <span v-if="!collapsed">Tasks</span>
+      <li @click="toggleMenu('reports')" class="item">
+        <span v-if="!isCollapsed">Reports</span>
       </li>
 
-      <li>
-        <i class="las la-calendar"></i>
-        <span v-if="!collapsed">Calendar</span>
+      <li @click="toggleMenu('analytics')" class="item">
+        <span v-if="!isCollapsed">Analytics</span>
       </li>
 
-      <li>
-        <i class="las la-chart-bar"></i>
-        <span v-if="!collapsed">Analytics</span>
-      </li>
-
-      <li>
-        <i class="las la-users"></i>
-        <span v-if="!collapsed">Users</span>
-      </li>
-
-      <li>
-        <i class="las la-cog"></i>
-        <span v-if="!collapsed">Settings</span>
+      <li @click="toggleMenu('settings')" class="item">
+        <span v-if="!isCollapsed">Settings</span>
       </li>
     </ul>
 
-    <button class="toggle" @click="collapsed = !collapsed">
-      <i class="las" :class="collapsed ? 'la-angle-right' : 'la-angle-left'"></i>
-    </button>
   </div>
 </template>
 
@@ -51,8 +34,13 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      collapsed: false,
+      isCollapsed: false,
     };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isCollapsed = !this.isCollapsed;
+    },
   },
 };
 </script>
@@ -61,67 +49,56 @@ export default {
 .sidebar {
   width: 230px;
   height: 100vh;
-  background: #1f2937;
-  color: #e5e7eb;
-  display: flex;
-  flex-direction: column;
-  padding: 15px 0;
-  position: relative;
-  transition: 0.3s;
-}
-.sidebar.collapsed {
-  width: 75px;
+  background: #1b1b1d; /* dark */
+  color: #f5d76e;
+  padding-top: 20px;
+  transition: 0.3s ease;
+  border-right: 2px solid #f5d76e33;
 }
 
-/* Top Branding */
-.top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  font-weight: 600;
-  font-size: 17px;
+.sidebar.collapsed {
+  width: 70px;
 }
-.icon {
-  font-size: 24px;
+
+/* Toggle Button */
+.toggle-btn {
+  position: absolute;
+  top: 15px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  background: #f5d76e;
+  color: #1b1b1d;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* Menu */
 .menu {
   list-style: none;
+  margin-top: 60px;
   padding: 0;
-  margin-top: 20px;
-}
-.menu li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  cursor: pointer;
-  font-size: 15px;
-  border-radius: 8px;
-  transition: 0.2s;
-}
-.menu li:hover {
-  background: #374151;
-}
-.menu i {
-  font-size: 20px;
 }
 
-/* Toggle Button */
-.toggle {
-  position: absolute;
-  right: -12px;
-  top: 20px;
-  width: 28px;
-  height: 28px;
-  background: #111827;
-  border: none;
-  color: white;
-  border-radius: 50%;
+.item {
+  padding: 14px 18px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
   transition: 0.3s;
+  margin: 5px 10px;
+  border-radius: 10px;
+  background: #29292c;
+  border: 1px solid #f5d76e22;
+}
+
+.item:hover {
+  background: #f5d76e;
+  color: #1b1b1d;
+  font-weight: bold;
 }
 </style>
