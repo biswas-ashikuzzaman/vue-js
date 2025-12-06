@@ -1,21 +1,31 @@
+<!-- Header.vue -->
 <template>
   <header class="header">
-    <!-- Hamburger for sidebar toggle -->
-    <button class="hamburger" @click="$emit('toggle-sidebar')">☰</button>
-
-    <!-- Left: Search Bar -->
-    <div class="search-container">
-      <input type="text" placeholder="Search..." v-model="searchQuery" />
-      <button>🔍</button>
+    <div class="left">
+      <button class="menu-btn" @click="$emit('toggle-sidebar')">
+        <i class="las la-bars"></i>
+      </button>
+      <h2 class="logo">MyPanel</h2>
     </div>
 
-    <!-- Right: Profile Dropdown -->
-    <div class="profile-dropdown" @click="toggleDropdown">
-      <span class="profile-name">PROFILE ⬇</span>
-      <ul v-if="dropdownOpen" class="dropdown-menu">
-        <li @click="goHome">Home</li>
-        <li @click="logout">Logout</li>
-      </ul>
+    <div class="center">
+      <input type="text" placeholder="Search here..." />
+      <i class="las la-search search-icon"></i>
+    </div>
+
+    <div class="right">
+      <i class="las la-bell notif"></i>
+
+      <div class="profile" @click="toggleProfile">
+        <img src="https://i.ibb.co/7WymQpF/user.png" />
+        <i class="las la-angle-down"></i>
+
+        <ul v-if="openProfile" class="dropdown">
+          <li>Dashboard</li>
+          <li>Settings</li>
+          <li>Logout</li>
+        </ul>
+      </div>
     </div>
   </header>
 </template>
@@ -25,21 +35,12 @@ export default {
   name: "Header",
   data() {
     return {
-      searchQuery: "",
-      dropdownOpen: false,
+      openProfile: false,
     };
   },
   methods: {
-    toggleDropdown() {
-      this.dropdownOpen = !this.dropdownOpen;
-    },
-    goHome() {
-      alert("Go to Home!");
-      this.dropdownOpen = false;
-    },
-    logout() {
-      alert("Logout clicked!");
-      this.dropdownOpen = false;
+    toggleProfile() {
+      this.openProfile = !this.openProfile;
     },
   },
 };
@@ -47,95 +48,94 @@ export default {
 
 <style scoped>
 .header {
-  height: 60px;
-  width: 100%;
-  background: linear-gradient(to right, #0f6bbf, #0aaed8);
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 150;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.hamburger {
-  display: none;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.search-container {
+/* Left */
+.left {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
-
-.search-container input {
-  padding: 7px 10px;
-  border-radius: 20px 0 0 20px;
+.menu-btn {
+  width: 42px;
+  height: 42px;
   border: none;
-  outline: none;
-  width: 200px;
-}
-
-.search-container button {
-  padding: 7px 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 0 20px 20px 0;
+  background: #f3f4f6;
+  border-radius: 12px;
   cursor: pointer;
+  font-size: 20px;
+}
+.logo {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.search-container button:hover {
-  background: rgba(255, 255, 255, 0.35);
+/* Center Search */
+.center {
+  position: relative;
+}
+.center input {
+  width: 280px;
+  padding: 10px 40px 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  font-size: 20px;
+  opacity: 0.6;
 }
 
-.profile-dropdown {
+/* Right Profile */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.notif {
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.profile {
   position: relative;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-.profile-name {
-  font-weight: bold;
+.profile img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
 }
-
-.dropdown-menu {
+.dropdown {
   position: absolute;
-  right: 0;
-  top: 35px;
   background: white;
-  color: #0f6bbf;
+  top: 55px;
+  right: 0;
+  width: 150px;
   list-style: none;
   padding: 10px 0;
-  margin: 0;
-  border-radius: 8px;
-  min-width: 100px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
-
-.dropdown-menu li {
-  padding: 8px 15px;
+.dropdown li {
+  padding: 10px 15px;
   cursor: pointer;
 }
-
-.dropdown-menu li:hover {
-  background: rgba(15, 107, 191, 0.1);
-}
-
-@media screen and (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  .search-container input {
-    width: 100px;
-  }
+.dropdown li:hover {
+  background: #f3f4f6;
 }
 </style>
