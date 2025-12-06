@@ -1,0 +1,59 @@
+:root{
+  --bg: #fff9ed;              /* soft yellow-ish background (light) */
+  --panel: #fff8e6;
+  --text: #1f2937;
+  --accent: #f6c84c;          /* yellow accent */
+  --muted: #6b7280;
+  --shadow: rgba(31,41,55,0.06);
+}
+
+/* dark theme variables */
+:root[data-theme="dark"]{
+  --bg: #0b0b0c;              /* almost black background */
+  --panel: #0f1721;
+  --text: #e6eef8;
+  --accent: #f2c94c;          /* bright yellow for dark */
+  --muted: #9aa4b2;
+  --shadow: rgba(2,6,23,0.7);
+}
+
+*{box-sizing:border-box}
+html,body,#app{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+body{
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition: background .25s, color .25s;
+}
+
+/* Layout helpers */
+.app-layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* main content area */
+.main-area{
+  flex:1;
+  padding:22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), rgba(255,255,255,0)) , transparent;
+}
+
+/* small utility */
+.round {
+  border-radius:10px;
+}
+.card {
+  background:var(--panel);
+  box-shadow: 0 6px 18px var(--shadow);
+  border-radius:12px;
+  padding:14px;
+  transition:transform .15s;
+}
+.card:hover{ transform: translateY(-4px); }
+
+/* responsive */
+@media (max-width:900px){
+  .main-area{ padding:14px; }
+}
