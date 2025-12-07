@@ -1,0 +1,92 @@
+npm create vue@latest
+
+
+1.npm install vue-router@4
+npm install vue-router@4
+
+Step 2: Router
+src/router/index.js
+
+
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import('../views/ContactView.vue')
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes
+})
+
+export default router
+
+
+
+
+Step 3: main.js
+
+src/main.js:
+
+
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+createApp(App).mount('#app')
+
+
+const app = createApp(App)
+
+app.use(router)
+
+app.mount('#app')
+
+
+Step 4: App.vue
+
+<template>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav>
+
+  <router-view />
+</template>
+
+
+Step 5:  create folder views
+
+src/views/HomeView.vue:
+
+
+
+
+
+1️⃣ Project Structure
+
+my-vue-app/
+├─ index.html
+├─ package.json
+├─ vite.config.js
+└─ src/
+    ├─ main.js
+    ├─ App.vue
+    ├─ router/
+    │   └─ index.js
+    └─ views/
+        ├─ HomeView.vue
+        ├─ AboutView.vue
+        └─ ContactView.vue
