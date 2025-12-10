@@ -1,18 +1,21 @@
 <template>
   <header class="header">
-    <!-- Left Logo -->
-    <div class="logo">MY PANEL</div>
+    <!-- Hamburger for sidebar toggle -->
+    <button class="hamburger" @click="$emit('toggle-sidebar')">☰</button>
 
-    <!-- Search Bar -->
-    <div class="search-box">
-      <input type="text" placeholder="Search..." />
+    <!-- Left: Search Bar -->
+    <div class="search-container">
+      <input type="text" placeholder="Search..." v-model="searchQuery" />
       <button>🔍</button>
     </div>
 
-    <!-- Profile -->
-    <div class="profile">
-      <img src="https://i.ibb.co/7WymQpF/user.png" class="avatar" />
-      <span class="name">ADMIN</span>
+    <!-- Right: Profile Dropdown -->
+    <div class="profile-dropdown" @click="toggleDropdown">
+      <span class="profile-name">PROFILE ⬇</span>
+      <ul v-if="dropdownOpen" class="dropdown-menu">
+        <li @click="goHome">Home</li>
+        <li @click="logout">Logout</li>
+      </ul>
     </div>
   </header>
 </template>
@@ -20,74 +23,119 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      searchQuery: "",
+      dropdownOpen: false,
+    };
+  },
+  methods: {
+    toggleDropdown() {
+      this.dropdownOpen = !this.dropdownOpen;
+    },
+    goHome() {
+      alert("Go to Home!");
+      this.dropdownOpen = false;
+    },
+    logout() {
+      alert("Logout clicked!");
+      this.dropdownOpen = false;
+    },
+  },
 };
 </script>
 
 <style scoped>
 .header {
-  height: 70px;
+  height: 60px;
   width: 100%;
-  background: #1b1b1d; /* premium dark */
-  color: #f5d76e; /* yellowish accent */
+  background: linear-gradient(to right, #0f6bbf, #0aaed8);
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 25px;
-  border-bottom: 2px solid #f5d76e33;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 150;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Logo */
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
-/* Search */
-.search-box {
+.search-container {
   display: flex;
   align-items: center;
-  background: #2a2a2c;
-  padding: 3px 10px;
-  border-radius: 10px;
-  border: 1px solid #f5d76e33;
 }
 
-.search-box input {
-  background: transparent;
+.search-container input {
+  padding: 7px 10px;
+  border-radius: 20px 0 0 20px;
   border: none;
   outline: none;
-  padding: 7px;
-  color: #fff;
+  width: 200px;
 }
 
-.search-box button {
-  background: transparent;
+.search-container button {
+  padding: 7px 12px;
   border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #f5d76e;
-}
-
-/* Profile */
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 0 20px 20px 0;
   cursor: pointer;
 }
 
-.avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #f5d76e;
+.search-container button:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
-.name {
-  font-size: 14px;
+.profile-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-name {
+  font-weight: bold;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 35px;
+  background: white;
+  color: #0f6bbf;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  border-radius: 8px;
+  min-width: 100px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu li {
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background: rgba(15, 107, 191, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .search-container input {
+    width: 100px;
+  }
 }
 </style>
